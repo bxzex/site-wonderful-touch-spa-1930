@@ -272,7 +272,9 @@
             color: var(--clr-text-main);
             font-size: 1.8rem;
             cursor: pointer;
-            z-index: 201;
+            z-index: 10000;
+            width: 30px;
+            text-align: center;
         }
 
         /* --- MOBILE MENU --- */
@@ -281,7 +283,7 @@
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(10, 12, 11, 0.98);
             backdrop-filter: blur(20px);
-            z-index: 200;
+            z-index: 9998;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -298,14 +300,6 @@
             text-decoration: none;
             display: block;
             padding: 0.5rem 0;
-        }
-        .mobile-close {
-            position: absolute;
-            top: 2rem; right: 5%;
-            background: none; border: none;
-            color: var(--clr-text-main);
-            font-size: 2rem;
-            cursor: pointer;
         }
 
         /* --- STICKY SIDEBAR --- */
@@ -1036,7 +1030,7 @@
         /* TABLET NAV OVERRIDES */
         @media (max-width: 1024px) {
             nav .nav-links, nav .desktop-nav, nav ul { display: none !important; }
-            .hamburger, .menu-toggle, .mobile-menu-btn { display: flex !important; align-items: center; justify-content: center; font-size: 24px; color: white; background: none; border: none; cursor: pointer; z-index: 101; margin-left: 15px; }
+            .hamburger, .menu-toggle, .mobile-menu-btn { display: flex !important; align-items: center; justify-content: center; font-size: 24px; color: white; background: none; border: none; cursor: pointer; z-index: 10000; margin-left: 15px; width: 30px; }
         }
 
         /* MOBILE OVERRIDES */
@@ -1076,7 +1070,6 @@
 
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu" id="mobileMenu">
-        <button class="mobile-close" id="closeMenuBtn"><i class="fas fa-times"></i></button>
         <a href="#home">Home</a>
         <a href="#about">About</a>
         <a href="#services">Services</a>
@@ -1663,12 +1656,17 @@
             // --- Mobile Menu Toggle ---
             const hamburgerBtn = document.getElementById('hamburgerBtn');
             const mobileMenu = document.getElementById('mobileMenu');
-            const closeMenuBtn = document.getElementById('closeMenuBtn');
             const mobileLinks = mobileMenu.querySelectorAll('a');
 
-            function toggleMenu() { mobileMenu.classList.toggle('active'); }
+            function toggleMenu() { 
+                mobileMenu.classList.toggle('active'); 
+                if (mobileMenu.classList.contains('active')) {
+                    hamburgerBtn.innerHTML = '<i class="fas fa-times"></i>';
+                } else {
+                    hamburgerBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            }
             hamburgerBtn.addEventListener('click', toggleMenu);
-            closeMenuBtn.addEventListener('click', toggleMenu);
             mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
 
             // --- Navbar Scroll Effect ---
